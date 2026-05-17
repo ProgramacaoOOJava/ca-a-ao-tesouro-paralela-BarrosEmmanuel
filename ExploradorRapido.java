@@ -1,38 +1,35 @@
 /**
- * Explorador rápido que executa tarefas com alta velocidade e eficiência.
- * Implementa Runnable para execução em thread separada.
+ * Explorador rápido que disputa permissões no semáforo para agir instantaneamente.
  */
 public class ExploradorRapido extends Explorador implements Runnable {
     
-    // Construtor do explorador rápido.
-    public ExploradorRapido(String nome, int prioridade, String tarefa) {
-        super(nome, "Rápido", prioridade, tarefa);
+    public ExploradorRapido(String nome, int prioridade, Tarefa tarefa, java.util.concurrent.Semaphore semaforo) {
+        super(nome, "Rápido", prioridade, tarefa, semaforo);
     }
     
-    /**
-     * Implementação específica da execução de tarefa para exploradores rápidos.
-     * @throws TarefaInvalidaException Se a tarefa for nula ou vazia
-     */
     @Override
     public void executarTarefa() throws TarefaInvalidaException {
-        // Valida se a tarefa é válida
-        if (getTarefa() == null || getTarefa().trim().isEmpty()) {
+        if (getTarefa() == null || getTarefa().getDescricao().trim().isEmpty()) {
             throw new TarefaInvalidaException("Tarefa inválida para " + getNome());
         }
-        exibirStatus();
+
         try {
-            // TiManu voa pelo mapa para garantir a vitória absoluta!
-            Thread.sleep(100);
-            System.out.println("-> [VITÓRIA] O líder " + getNome() + " desbravou o mapa 10x10 e pegou o tesouro!");
+            // Disputa o semáforo de forma coordenada
+            getSemaforo().acquire();
+            exibirStatus("iniciou tarefa: " + getTarefa().getDescricao());
+            
+            // Região crítica controlada (TiManu executa com agilidade extrema!)
+            Thread.sleep(800); 
+            
+            System.out.println("-> [SUCESSO] O líder " + getNome() + " extraiu o tesouro do quadrante e liberou o espaço.");
         } catch (InterruptedException e) {
-            System.out.println(getNome() + " foi interrompido.");
+            System.out.println(getNome() + " foi interrompido na caverna.");
+        } finally {
+            // Sempre devolve a permissão para os outros guerreiros jogarem
+            getSemaforo().release();
         }
     }
     
-    /**
-     * Método run() executado quando a thread é iniciada.
-     * Trata exceções e chama executarTarefa().
-     */
     @Override
     public void run() {
         try {
