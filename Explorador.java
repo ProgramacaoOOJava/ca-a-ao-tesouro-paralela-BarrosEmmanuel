@@ -21,7 +21,7 @@ public abstract class Explorador {
      * Define como cada tipo de explorador executa sua tarefa.
      * @throws TarefaInvalidaException Se a tarefa for inválida
      */
-    public abstract void ejecutarTarefa() throws TarefaInvalidaException;
+    public abstract void executarTarefa() throws TarefaInvalidaException;
     
     /**
      * Exibe o status completo do explorador com formatação clara.
