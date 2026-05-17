@@ -4,12 +4,12 @@
 public final class Missao {
     private final String descricao;
     private final String local;
-    private final String dificuldade; // Ex: Alta, Média, Baixa
+    private final String dificuldade;
 
     public Missao(String descricao, String local, String dificuldade) {
         this.descricao = descricao;
         this.local = local;
-        this.dificuldade = difficulty;
+        this.dificuldade = dificuldade; // CORRIGIDO: Mudado de difficulty para dificuldade
     }
 
     public String getDescricao() { return descricao; }
