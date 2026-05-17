@@ -1,34 +1,29 @@
-import java.util.concurrent.Semaphore;
+import java.util.concurrent.Callable;
 
 /**
- * Classe abstrata atualizada para o Nível Aventureiro.
- * Agora gerencia a disputa por recursos usando Semáforos.
+ * Classe abstrata atualizada para o Nível Mestre.
+ * Agora retorna o valor dos pontos obtidos na missão através de Callable.
  */
-public abstract class Explorador {
+public abstract class Explorador implements Callable<Double> {
     private String nome;
-    private String tipo;
-    private int prioridade;
-    private Tarefa tarefa; // Agora utiliza a classe imutável Tarefa
-    private Semaphore semaforo; // Portão de controle de fluxo
+    private String especialidade;
+    private Missao missao;
 
-    public Explorador(String nome, String tipo, int prioridade, Tarefa tarefa, Semaphore semaforo) {
+    public Explorador(String nome, String especialidade, Missao missao) {
         this.nome = nome;
-        this.tipo = tipo;
-        this.prioridade = prioridade;
-        this.tarefa = tarefa;
-        this.semaforo = semaforo;
+        this.especialidade = especialidade;
+        this.missao = missao;
     }
 
-    public abstract void executarTarefa() throws TarefaInvalidaException;
-    
-    public void exibirStatus(String mensagem) {
-        System.out.println("Explorador: " + nome + " | Status: " + mensagem);
+    // O método call() substitui o antigo run() e permite retornar valores!
+    @Override
+    public abstract Double call() throws Exception;
+
+    public void exibirResultado(double pontos) {
+        System.out.println("Explorador: " + nome + " | Especialidade: " + especialidade + " | Missão: " + missao.getDescricao() + " | Pontos: " + pontos);
     }
-    
-    // Getters para as subclasses e monitoramento
+
     public String getNome() { return nome; }
-    public String getTipo() { return tipo; }
-    public int getPrioridade() { return prioridade; }
-    public Tarefa getTarefa() { return tarefa; }
-    public Semaphore getSemaforo() { return semaforo; }
+    public String getEspecialidade() { return especialidade; }
+    public Missao getMissao() { return missao; }
 }
