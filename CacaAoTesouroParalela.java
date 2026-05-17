@@ -65,5 +65,9 @@ public class CacaAoTesouroParalela {
         System.out.println("Soma total dos pontos: " + somaTotal);
         System.out.println("--------------------------------------------");
         System.out.println("Parabéns, General TiManu! O Rei Tutor foi completamente superado!");
+       
+        // MENSAGEM DE VITÓRIA E RISADA REAL EXIGIDA
+        System.out.println("\nMUAHUAHUAHUAHUAHUA! O trono é nosso!");
+        System.out.println("O Rei Tutor não foi páreo para a nossa arquitetura concorrente!");
     }
 }
